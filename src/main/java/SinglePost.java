@@ -1,3 +1,5 @@
+import twitter4j.Place;
+
 import java.io.Serializable;
 
 /**
@@ -20,11 +22,19 @@ public class SinglePost implements Serializable {
     private String name;
     private String post;
     private String timestamp;
+    private Place location;
 
     public SinglePost(String name, String post, String timestamp) {
         this.name = name;
         this.post = post;
         this.timestamp = timestamp;
+    }
+
+    public SinglePost(String name, String post, String timestamp, Place location) {
+        this.name = name;
+        this.post = post;
+        this.timestamp = timestamp;
+        this.location = location;
     }
 
     @Override
