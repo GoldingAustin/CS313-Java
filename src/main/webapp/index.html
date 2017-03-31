@@ -1,10 +1,177 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
+<head>
+    <title>Post Map App Store Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- jQuery library-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .vertical-center {
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        .panel-title {
+            font-size: 2em;
+            text-align: center;
+        }
+
+        html, body {
+            background: rgba(253, 251, 250, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+<div class="page-header" style="background: #8cb8ff; margin: 0; padding: 10px;">
+    <h1 style="text-align: center; margin: 0;">Post Map</h1>
+</div>
+<div class="container-fluid">
+    <div class="jumbotron">
+        <h2>What is Post Map?</h2>
+        <p>The Post Map allows you to search by username or hashtag and displays a list of Tweets or Youtube videos as
+            well
+            as a map of where each post was made in the world. You can click on each pin on the map to see details on
+            the
+            post. You can also create a bounding box on the map and it will display a list of Youtube videos and
+            Facebook posts in that area. It will also put pins on a map of where these posts were made.</p>
+    </div>
+
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                        Click to Show Script</a>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse">
+                <div class="jumbotron">
+                    <ol>
+                        <li>In the search input bar, input "dogs"</li>
+                        <li>Click the spyglass icon to the right of the bar to search</li>
+                        <li>Wait for the page to load</li>
+                        <li>The page will display a map and a list underneath it</li>
+                        <li>There will be pins on the map, click on a pin (If clicking on the pin
+                            displays more pins that are yellow, that means there were multiple posts from one location,
+                            click on one
+                            of the yellow
+                            pins)
+                        </li>
+                        <li>The pin will open a small window displaying the information on the tweet</li>
+                        <li>Right click on the blue underlined text and click open in new tab to see the post at it's
+                            source
+                        </li>
+                        <li>Return to the map page and scroll down to see a list of posts in text form that are plotted
+                            on the map
+                        </li>
+                        <li>Scroll back up to the top of the page and select "Create Box To Find Posts in Area"</li>
+                        <li>Click and hold then drag your mouse to create a box around California, Oregon, Washington,
+                            Montana,
+                            Idaho, Nevada
+                            and Utah
+                        </li>
+                        <li>Click the spyglass icon to the right of the bar to search</li>
+                        <li>The page will display a map and a list underneath it</li>
+                        <li>There will be pins on the map, click on a pin (If clicking on the pin
+                            displays more pins that are yellow, that means there were multiple posts from one location,
+                            click on one
+                            of the yellow
+                            pins)
+                        </li>
+                        <li>The pin will open a small window displaying the information on the tweet</li>
+                        <li>Right click on the blue underlined text and click open in new tab to see the post at it's
+                            source
+                        </li>
+                        <li>Return to the map page and scroll down to see a list of posts in text form that are plotted
+                            on the map
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                        Click to Show Guide</a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="jumbotron vertical-center">
+                    <img class="img-responsive center-block"
+                         src="images/Screen Shot 2017-03-30 at 3.39.42 PM.png"/>
+                    <h3>This is the general layout of the application</h3>
+                </div>
+                <div class="jumbotron vertical-center">
+                    <img class="img-responsive center-block"
+                         src="images/Screen Shot 2017-03-30 at 3.40.01 PM.png"/>
+                    <h3>To search, type in the hashtag or username you'd like and click on the spyglass to the
+                        right,
+                        for example
+                        dogs</h3>
+                </div>
+                <div class="jumbotron vertical-center">
+                    <img class="img-responsive center-block"
+                         src="images/Screen Shot 2017-03-30 at 3.40.18 PM.png"/>
+                    <h3>The next page will include a map of pins for posts in that area</h3>
+                </div>
+                <div class="jumbotron vertical-center">
+                    <img class="img-responsive center-block"
+                         src="images/Screen Shot 2017-03-30 at 3.40.32 PM.png"/>
+                    <h3>Scrolling down shows a list of each of the posts</h3>
+                </div>
+                <div class="jumbotron vertical-center">
+                    <img class="img-responsive center-block"
+                         src="images/Screen Shot 2017-03-30 at 3.41.33 PM.png"/>
+                    <h3>If you click a pin on the map, it will open a window showing information about the
+                        post</h3>
+                </div>
+                <div class="jumbotron vertical-center">
+                    <img class="img-responsive center-block"
+                         src="images/Screen Shot 2017-03-30 at 3.41.43 PM.png"/>
+                    <h3>Some posts are in the same area, if you click on a pin it can spread to multiple pins
+                        which
+                        denote posts in
+                        the same location</h3>
+                </div>
+                <div class="jumbotron vertical-center">
+                    <img class="img-responsive center-block"
+                         src="images/Screen Shot 2017-03-30 at 3.42.07 PM.png"/>
+                    <h3>You can also search by creating a boxed area where you want to see posts</h3>
+                </div>
+                <div class="jumbotron vertical-center">
+                    <img class="img-responsive center-block"
+                         src="images/Screen Shot 2017-03-30 at 3.42.15 PM.png"/>
+                    <h3>Click the button "Create Box To Find Posts in Area" then click and drag your mouse over
+                        the area
+                        you would like to see posts from,
+                        then click on the spyglass to see results</h3>
+                </div>
+                <div class="jumbotron vertical-center">
+                    <img class="img-responsive center-block"
+                         src="images/Screen Shot 2017-03-30 at 3.42.31 PM.png"/>
+                    <h3>The search will also produce pins on the map for posts in your selected area</h3>
+                </div>
+                <div class="jumbotron vertical-center">
+                    <img class="img-responsive center-block"
+                         src="images/Screen Shot 2017-03-30 at 3.42.41 PM.png"/>
+                    <h3>You can scroll down to see the posts from that search as well</h3>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" onclick="location.href='map.jsp'">
+                        Click to Go to Post Map Application</a>
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 </html>

@@ -14,8 +14,6 @@ import com.restfb.*;
 import com.restfb.Version;
 import com.restfb.types.Place;
 import com.restfb.types.Post;
-import twitter4j.*;
-import twitter4j.conf.ConfigurationBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,12 +30,13 @@ import java.util.List;
 @WebServlet(name = "MapServlet", urlPatterns = {"/Map"})
 public class MapServlet extends HttpServlet {
     private List<SinglePost> posts = new ArrayList<>();
-    private List<Status> tweets;
+    private List<twitter4j.Status> tweets;
     private FacebookClient facebookClient23;
     private GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyAdsjlZu63hLWiK0D02VRC1cj2JdlDsgNU");
     private static YouTube youtube;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        posts.clear();
         String search = request.getParameter("search");
         String lat = request.getParameter("centerLat");
         String lng = request.getParameter("centerLong");
@@ -58,15 +57,15 @@ public class MapServlet extends HttpServlet {
         request.getRequestDispatcher("/map.jsp").forward(request, response);
     }
 
-    private Twitter setTwitter() {
-        ConfigurationBuilder cb = new ConfigurationBuilder();
+    private twitter4j.Twitter setTwitter() {
+        twitter4j.conf.ConfigurationBuilder cb = new twitter4j.conf.ConfigurationBuilder();
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey(Constants.TWITTER_API)
                 .setOAuthConsumerSecret(Constants.TWITTER_API_SECRET)
                 .setOAuthAccessToken(Constants.TWITTER_AUTH)
                 .setOAuthAccessTokenSecret(Constants.TWITTER_AUTH_TOKEN);
-        TwitterFactory tf = new TwitterFactory(cb.build());
-        Twitter twitter = tf.getInstance();
+        twitter4j.TwitterFactory tf = new twitter4j.TwitterFactory(cb.build());
+        twitter4j.Twitter twitter = tf.getInstance();
         return twitter;
     }
 
@@ -139,25 +138,24 @@ public class MapServlet extends HttpServlet {
     }
 
     private void getTwitterPosts(String search) {
-        Twitter twitter = setTwitter();
+        twitter4j.Twitter twitter = setTwitter();
         try {
-            Query query = new Query(search);
-            GeoLocation geoLocation = new GeoLocation(0.0, 0.0);
-            query.setGeoCode(geoLocation, 6371, Query.KILOMETERS);
+            twitter4j.Query query = new twitter4j.Query(search);
+            twitter4j.GeoLocation geoLocation = new twitter4j.GeoLocation(0.0, 0.0);
+            query.setGeoCode(geoLocation, 6371, twitter4j.Query.KILOMETERS);
             query.setCount(15);
             query.setLang("en");
-            QueryResult result;
+            twitter4j.QueryResult result;
             do {
                 result = twitter.search(query);
                 tweets = result.getTweets();
             } while ((query = result.nextQuery()) != null);
-            for (Status tweet : tweets) {
-                GeoLocation geoLocation1 = tweet.getGeoLocation();
+            for (twitter4j.Status tweet : tweets) {
+                twitter4j.GeoLocation geoLocation1 = tweet.getGeoLocation();
                 String geoLocation2 = tweet.getUser().getLocation();
                 SinglePost singlePost;
                 if (geoLocation1 != null) {
                     Coordinates coordinates = getCoordinates(geoLocation1.toString());
-                    System.out.println(geoLocation.toString());
                     String url = "https://twitter.com/" + tweet.getUser().getScreenName() + "/status/" + tweet.getId();
                     singlePost = new SinglePost("Twitter", tweet.getUser().getName(), tweet.getText(), tweet.getCreatedAt().toString(), coordinates, url);
                     posts.add(singlePost);
@@ -170,7 +168,7 @@ public class MapServlet extends HttpServlet {
                     }
                 }
             }
-        } catch (TwitterException e) {
+        } catch (twitter4j.TwitterException e) {
             e.printStackTrace();
         }
     }
@@ -185,6 +183,7 @@ public class MapServlet extends HttpServlet {
                 Parameter.with("distance", radius), Parameter.with("type", "place"));
 
         List<Place> fbPosts = publicSearch.getData();
+
         for (Place place : fbPosts) {
             String id = place.getId();
             Connection<Post> commentConnection
@@ -192,13 +191,13 @@ public class MapServlet extends HttpServlet {
                     Post.class, Parameter.with("limit", 3));
             List<Post> pgPostList = commentConnection.getData();
             for (Post pgPost : pgPostList) {
-                String url = "https://www.facebook.com/" + pgPost.getName() + "/posts/" + pgPost.getId();
+                System.out.println(pgPost.toString());
+                String url = "https://www.facebook.com/search/posts/?q=" + place.getName();
                 Coordinates coordinates = getCoordinates(place.getName());
-                System.out.println(String.valueOf(pgPost.getMetadata()));
                 SinglePost singlePost = new SinglePost("Facebook",
                         place.getName(),
                         pgPost.getMessage(),
-                        "0",
+                        "Unavailable",
                         coordinates,
                         url);
                 posts.add(singlePost);

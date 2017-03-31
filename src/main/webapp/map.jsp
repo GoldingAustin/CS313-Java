@@ -17,11 +17,8 @@
 <meta charset="utf-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- jQuery library-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/0.3.3/oms.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/additional-methods.min.js"></script>
-<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdsjlZu63hLWiK0D02VRC1cj2JdlDsgNU&callback=initMap"></script>
 <script src='sortable.min.js'></script>
 <link rel='stylesheet' href='sortable-theme-bootstrap.css'>
 <!-- Latest compiled JavaScript-->
@@ -54,7 +51,7 @@
         <form class="navbar-form" id="submitForm" action="Map" method="POST">
             <div class="form-group" style="display:inline; width: 100%;">
                 <div class="input-group" style="width: 100%;">
-                    <input type="text" name="search" class="form-control" placeholder="Search by hashtag or username">
+                    <input type="text" name="search" id="search" class="form-control" placeholder="Search by hashtag or username">
                     <input style="display: none;" type="text" id="centerLat" name="centerLat">
                     <input style="display: none;" type="text" id="centerLong" name="centerLong">
                     <input style="display: none;" type="text" id="radius" name="radius">
@@ -99,15 +96,7 @@
     var map;
     var timer = 0;
     var setBox = false;
-    function initMap() {
-        // Load OMS dynamically now that Google Maps API has loaded
-        var script_tag = document.createElement('script');
-        script_tag.setAttribute("type", "text/javascript");
-        script_tag.setAttribute("src", "oms.min.js");
-        (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
-        // initiate loading of oms and initialise map
-        setTimeout(loadMap, 50);
-    }
+
 
     function CenterControl(controlDiv) {
 
@@ -142,6 +131,7 @@
                 document.getElementById("setBoxText").style.color = 'black';
             } else {
                 setBox = true;
+                document.getElementById("search").innerHTML = "";
                 document.getElementById("setBoxText").style.color = 'green';
             }
         });
@@ -149,8 +139,7 @@
     }
 
 
-    function loadMap() {
-        if (typeof OverlappingMarkerSpiderfier == 'function') {
+    window.onload = function() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 0, lng: 0},
                 zoom: 3
@@ -217,16 +206,7 @@
             centerControlDiv.index = 1;
             map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
             addMarkers();
-        } else {
-            if (timer < 1000) {
-                timer += 50;
-                setTimeout(loadMap, 50);
-            } else {
-                alert('OverlappingMarkerSpiderfier taking too long to load');
-                throw('giving up!')
-            }
-        }
-    }
+    };
 
     function addMarkers() {
         var markers = [];
@@ -295,7 +275,7 @@
 
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdsjlZu63hLWiK0D02VRC1cj2JdlDsgNU&callback=initMap" async
-        defer></script>
+
+<script defer src="oms.min.js"></script>
 </body>
 </html>
